@@ -1,0 +1,69 @@
+import { ExternalLink, FolderGit2, MapPinned } from "lucide-react";
+import { Link } from "react-router-dom";
+import ProjectPreview from "../components/ProjectPreview.jsx";
+import TechStack from "../components/TechStack.jsx";
+
+export default function ProjectLayout({ project, nextProject }) {
+  return (
+    <article className={`project-shell theme-${project.theme}`}>
+      <section className="project-hero section-grid">
+        <div className="space-y-6">
+          <p className="eyebrow">{project.eyebrow}</p>
+          <h1>{project.title}</h1>
+          <p className="lead">{project.description}</p>
+          <TechStack items={project.techStack} />
+          <div className="flex flex-wrap gap-3">
+            {project.liveUrl && (
+              <a className="button-primary" href={project.liveUrl} target="_blank" rel="noreferrer">
+                <ExternalLink size={18} />
+                Open live
+              </a>
+            )}
+            {project.repoUrl && (
+              <a className="button-secondary" href={project.repoUrl} target="_blank" rel="noreferrer">
+                <FolderGit2 size={18} />
+                Repository
+              </a>
+            )}
+            {project.localPath && (
+              <span className="button-secondary">
+                <MapPinned size={18} />
+                Local project
+              </span>
+            )}
+          </div>
+        </div>
+        <ProjectPreview project={project} />
+      </section>
+
+      <section className="content-section">
+        <div className="project-metrics">
+          {project.metrics.map((metric) => (
+            <div key={metric}>
+              <span>{metric}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="content-section case-grid">
+        {project.blocks.map((block) => (
+          <article className="case-block" key={block.title}>
+            <h2>{block.title}</h2>
+            <p>{block.text}</p>
+          </article>
+        ))}
+      </section>
+
+      {nextProject && (
+        <section className="content-section next-project">
+          <p className="eyebrow">Next project</p>
+          <Link to={`/project/${nextProject.slug}`}>
+            <span>{nextProject.title}</span>
+            <strong>{nextProject.shortDescription}</strong>
+          </Link>
+        </section>
+      )}
+    </article>
+  );
+}
