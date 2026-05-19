@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redirecting...</title>
+    <script>
+      (function () {
+        var base = "/CV_website";
+        var path = window.location.pathname;
+        var route = path.indexOf(base) === 0 ? path.slice(base.length) : path;
+        var target = base + "/?redirect=" + encodeURIComponent(route || "/");
+
+        if (window.location.search) {
+          target += "&" + window.location.search.slice(1);
+        }
+
+        if (window.location.hash) {
+          target += window.location.hash;
+        }
+
+        window.location.replace(target);
+      })();
+    </script>
+  </head>
+  <body>
+    Redirecting...
+  </body>
+</html>
