@@ -1218,6 +1218,7 @@ h3 {
   --workflow-card-height: min(430px, 48vh);
   --workflow-card-half: min(215px, 24vh);
   --workflow-connector-y: 52%;
+  --journey-step-gap: clamp(54px, 9vh, 92px);
   position: sticky;
   top: 0;
   display: grid;
@@ -1278,12 +1279,12 @@ h3 {
 
 .journey-axis {
   position: absolute;
-  top: var(--workflow-axis-top);
+  top: 0;
   left: var(--workflow-axis-x);
   z-index: 7;
   display: grid;
   width: 42px;
-  height: var(--workflow-axis-height);
+  height: 100%;
   place-items: center;
   pointer-events: none;
   transform: translateX(-50%);
@@ -1297,9 +1298,9 @@ h3 {
 .journey-axis-line,
 .journey-axis-fill {
   position: absolute;
-  top: 0;
+  top: var(--workflow-axis-top);
   width: 2px;
-  height: 100%;
+  height: var(--workflow-axis-height);
   border-radius: 999px;
 }
 
@@ -1334,15 +1335,20 @@ h3 {
 }
 
 .journey-points {
-  position: relative;
-  display: grid;
-  height: 100%;
-  align-content: space-between;
-  justify-items: center;
+  position: absolute;
+  top: var(--workflow-connector-y);
+  left: 50%;
+  width: 1px;
+  height: 1px;
+  transform: translate(-50%, calc(var(--journey-active-index, 0) * var(--journey-step-gap) * -1));
+  transform-style: preserve-3d;
+  transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .journey-point {
-  position: relative;
+  position: absolute;
+  top: calc(var(--point-index, 0) * var(--journey-step-gap));
+  left: 0;
   z-index: 2;
   width: 9px;
   height: 9px;
@@ -1351,6 +1357,7 @@ h3 {
   background: rgba(255, 255, 255, 0.24);
   box-shadow: 0 0 0 0 transparent;
   opacity: 0.58;
+  transform: translate(-50%, -50%);
   transition: width 320ms ease, height 320ms ease, opacity 320ms ease, background 320ms ease, box-shadow 320ms ease;
 }
 
@@ -1374,31 +1381,6 @@ h3 {
   box-shadow:
     0 0 0 10px color-mix(in srgb, var(--project-accent) 14%, transparent),
     0 0 34px color-mix(in srgb, var(--project-accent) 52%, transparent);
-}
-
-.journey-active-node {
-  position: absolute;
-  top: var(--workflow-connector-y);
-  left: var(--workflow-axis-x);
-  z-index: 8;
-  width: 22px;
-  height: 22px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.84);
-  background: var(--project-accent);
-  box-shadow:
-    0 0 0 10px color-mix(in srgb, var(--project-accent) 13%, transparent),
-    0 0 34px color-mix(in srgb, var(--project-accent) 50%, transparent);
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(calc(0.72 + (var(--connector-presence) * 0.28)));
-  transition:
-    opacity 260ms ease,
-    transform 320ms ease;
-  pointer-events: none;
-}
-
-.journey-sticky.is-intro-hidden .journey-active-node {
-  opacity: 1;
 }
 
 .journey-connector {
