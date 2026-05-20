@@ -1,11 +1,18 @@
 import { ExternalLink, FolderGit2, MapPinned } from "lucide-react";
 import { Link } from "react-router-dom";
 import ProjectPreview from "../components/ProjectPreview.jsx";
+import ProjectWorkflowTree from "../components/ProjectWorkflowTree.jsx";
 import TechStack from "../components/TechStack.jsx";
 
 export default function ProjectLayout({ project, nextProject }) {
+  const themeStyle = project.themeStyle ?? {};
+  const style = {
+    "--project-accent": themeStyle.accent ?? project.accent,
+    "--project-gradient": themeStyle.gradient,
+  };
+
   return (
-    <article className={`project-shell theme-${project.theme}`}>
+    <article className={`project-shell theme-${project.theme}`} style={style}>
       <section className="project-hero section-grid">
         <div className="space-y-6">
           <p className="eyebrow">{project.eyebrow}</p>
@@ -54,6 +61,8 @@ export default function ProjectLayout({ project, nextProject }) {
           </article>
         ))}
       </section>
+
+      <ProjectWorkflowTree workflow={project.workflow} />
 
       {nextProject && (
         <section className="content-section next-project">

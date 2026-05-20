@@ -3,6 +3,115 @@ import rusaNozzle from "../assets/rusa/forsunka.png";
 
 export const projects = [
   {
+    slug: "ai-audio-analyzer-plugin",
+    title: "AI Audio Analyzer Plugin",
+    eyebrow: "Python + music analysis",
+    type: "Plugin Project",
+    layout: "default",
+    theme: "studio",
+    year: "2026",
+    shortDescription:
+      "Python prototype for a smart mastering assistant: stereo track analysis, loudness metrics, spectral balance, stereo width, reports and ML-ready dataset export.",
+    description:
+      "A first working backend-style music analysis tool built in Python. It loads stereo tracks, measures peak/RMS/LUFS/crest factor, estimates spectral balance and stereo width by frequency bands, compares with a reference track, prints reports and exports feature datasets for an AI quality model.",
+    localPath: "C:\\Users\\Гера\\OneDrive\\Рабочий стол\\проект с плагином\\плагин",
+    techStack: ["Python", "NumPy", "SciPy", "SoundFile", "pyloudnorm", "Pandas", "scikit-learn"],
+    metrics: ["LUFS / RMS / peak", "5-band spectral balance", "Stereo width analysis", "CSV dataset export"],
+    accent: "#8a73ff",
+    themeStyle: {
+      accent: "#8a73ff",
+      gradient: "linear-gradient(135deg, #0b0920 0%, #2a1f68 42%, #071322 100%)",
+      cardStyle: "glow",
+    },
+    preview: {
+      kind: "wave",
+      label: "Audio features -> Report -> ML dataset",
+    },
+    blocks: [
+      {
+        title: "What it does",
+        text: "Analyzes stereo audio files and generates a readable mastering-style report with loudness, dynamics, spectrum and stereo information.",
+      },
+      {
+        title: "Project structure",
+        text: "The code is split into analyzer.py plus audio_analyzer modules for audio IO, analysis, metrics, spectrum, stereo and report generation.",
+      },
+      {
+        title: "AI workflow",
+        text: "Scan mode exports CSV feature datasets, then ml/train_ai.py can train the first tabular quality model using labeled tracks.",
+      },
+    ],
+    workflow: {
+      eyebrow: "Project Journey / Workflow Tree",
+      title: "From analyzer idea to VST plugin roadmap",
+      description:
+        "A scroll-driven journey through the project evolution: initial music problem, local analyzer implementation, real comparison tests, practical conclusions and the next step toward a full VST plugin.",
+      steps: [
+        {
+          kicker: "01 / Idea",
+          title: "From Music Problem to Plugin Idea",
+          text:
+            "The project started as an idea for a tool that helps musicians understand why their tracks sound different from professional references.",
+          tone: "idea",
+        },
+        {
+          kicker: "02 / Analyzer",
+          title: "Local Audio Analyzer",
+          text:
+            "I built a local analyzer that compares tracks by loudness, spectral balance, presence, air, and stereo width.",
+          metrics: ["LUFS", "Spectral balance", "Presence", "Air", "Stereo width"],
+          tone: "build",
+        },
+        {
+          kicker: "03 / Test Case",
+          title: "Real Track Comparison",
+          text:
+            "I tested my own tracks against Project_42 and the reference track U WON'T! to understand the real mix differences.",
+          metrics: ["Project_42", "U WON'T!", "Matched analysis"],
+          tone: "test",
+        },
+        {
+          kicker: "04 / Results",
+          title: "Results vs Project_42",
+          text: "The first comparison showed that Project_48 is very close in loudness and density.",
+          metrics: ["LUFS delta: -0.04 dB", "Air: -2.73 dB", "Presence: -1.03 dB"],
+          insight:
+            "Project_48 is very close in loudness and density, but slightly darker and less open in the upper range.",
+          tone: "test",
+        },
+        {
+          kicker: "05 / Results",
+          title: "Results vs U WON'T!",
+          text: "The reference comparison showed that loudness alone was not the missing piece.",
+          metrics: [
+            "My track is +1.62 dB louder",
+            "Presence: -3.85 dB",
+            "Air: -4.28 dB",
+            "Stereo image is narrower in most bands",
+          ],
+          insight:
+            "The track is already loud, but it does not feel as open, wide, and expensive as the reference.",
+          tone: "test",
+        },
+        {
+          kicker: "06 / Conclusion",
+          title: "Practical Conclusion",
+          text:
+            "The goal is not to push loudness further. The better approach is to compare at matched loudness, gently open the 8-10 kHz+ air range, check 2-6 kHz for presence and attack, and avoid overprocessing the low end.",
+          tone: "result",
+        },
+        {
+          kicker: "07 / Next Step",
+          title: "Toward AI Model and VST Plugin",
+          text:
+            "The next stage is to expand the analysis pipeline, collect more comparison data, train a local AI model, and design the first proper VST plugin interface.",
+          metrics: ["Analysis pipeline", "Local AI model", "VST interface"],
+          tone: "next",
+        },
+      ],
+    },
+  },
+  {
     slug: "fve-ai-sales-automation",
     title: "FVE AI Sales Automation",
     eyebrow: "AI + CRM automation",
@@ -19,6 +128,11 @@ export const projects = [
     techStack: ["HTML", "CSS", "JavaScript", "AI workflow", "CRM concept"],
     metrics: ["Reusable explanation page", "Business workflow focus", "AI automation demo"],
     accent: "#29d3a6",
+    themeStyle: {
+      accent: "#29d3a6",
+      gradient: "linear-gradient(135deg, #06251f 0%, #0f3d35 44%, #0f172a 100%)",
+      cardStyle: "terminal",
+    },
     preview: { kind: "diagram", label: "Lead -> AI -> CRM -> Sales action" },
     blocks: [
       {
@@ -52,6 +166,11 @@ export const projects = [
     techStack: ["HTML", "CSS", "JavaScript", "Node.js", "Express", "Nodemailer"],
     metrics: ["175-line homepage", "Product catalog", "Mobile optimization", "70 000 EUR business impact"],
     accent: "#d79b31",
+    themeStyle: {
+      accent: "#d79b31",
+      gradient: "linear-gradient(135deg, #2d2414 0%, #6b4a1d 44%, #111827 100%)",
+      cardStyle: "industrial",
+    },
     preview: {
       kind: "images",
       images: [rusaPart, rusaNozzle],
@@ -87,6 +206,11 @@ export const projects = [
     techStack: ["FL Studio", "Audio production", "Web audio", "React"],
     metrics: ["Waveform block planned", "Cover art planned", "Devlog-ready"],
     accent: "#7c5cff",
+    themeStyle: {
+      accent: "#ff5c93",
+      gradient: "linear-gradient(135deg, #28142b 0%, #4c1d35 44%, #111827 100%)",
+      cardStyle: "studio",
+    },
     preview: { kind: "wave", label: "Audio visualizer placeholder" },
     blocks: [
       {

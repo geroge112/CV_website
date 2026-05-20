@@ -10,6 +10,26 @@
   --line: rgba(15, 23, 42, 0.12);
   --surface: rgba(255, 255, 255, 0.78);
   --project-accent: #2563eb;
+  --project-gradient: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+  --project-page-bg:
+    radial-gradient(circle at 18% 12%, color-mix(in srgb, var(--project-accent) 18%, transparent), transparent 30%),
+    linear-gradient(135deg, rgba(5, 7, 17, 0.96), rgba(11, 16, 32, 0.92) 52%, rgba(7, 7, 19, 0.96));
+  --project-card-bg:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.075)),
+    rgba(9, 13, 27, 0.82);
+  --project-panel-bg:
+    radial-gradient(circle at 16% 12%, color-mix(in srgb, var(--project-accent) 18%, transparent), transparent 38%),
+    var(--project-card-bg);
+  --project-border: color-mix(in srgb, var(--project-accent) 30%, rgba(255, 255, 255, 0.14));
+  --project-glow:
+    0 26px 90px rgba(0, 0, 0, 0.38),
+    0 0 0 1px color-mix(in srgb, var(--project-accent) 16%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --project-muted: #c5ccda;
+  --project-active-bg: color-mix(in srgb, var(--project-accent) 18%, rgba(255, 255, 255, 0.08));
+  --workflow-card-bg: var(--project-card-bg);
+  --workflow-card-border: var(--project-border);
+  --workflow-card-glow: var(--project-glow);
 }
 
 * {
@@ -18,6 +38,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 0;
 }
 
 body {
@@ -164,8 +185,115 @@ textarea {
 }
 
 .hero-section {
-  min-height: calc(100vh - 120px);
-  padding-bottom: 44px;
+  display: grid;
+  min-height: calc(100vh - 118px);
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+  gap: 34px;
+  align-items: center;
+  padding-bottom: 54px;
+}
+
+.hero-copy {
+  max-width: 860px;
+}
+
+.hero-copy h1 {
+  margin-bottom: 16px;
+}
+
+.hero-copy h2 {
+  max-width: 760px;
+  margin-bottom: 22px;
+  color: #0f766e;
+  font-size: clamp(1.45rem, 3vw, 2.5rem);
+  line-height: 1.08;
+}
+
+.hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 26px 0;
+}
+
+.hero-badges span {
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.74);
+  padding: 9px 12px;
+  color: #334155;
+  font-size: 0.9rem;
+  font-weight: 850;
+  backdrop-filter: blur(18px);
+}
+
+.hero-panel {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(41, 211, 166, 0.16), transparent 42%),
+    #111827;
+  box-shadow: 0 28px 80px rgba(17, 24, 39, 0.25);
+  color: #fff;
+  padding: 24px;
+}
+
+.hero-panel::before {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 36px 36px;
+  content: "";
+  opacity: 0.42;
+}
+
+.hero-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-panel-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  padding-bottom: 18px;
+}
+
+.hero-panel-top span,
+.hero-terminal p {
+  color: #a7f3d0;
+}
+
+.hero-terminal {
+  display: grid;
+  gap: 10px;
+  border-radius: 8px;
+  background: rgba(2, 6, 23, 0.62);
+  padding: 18px;
+  font-family: "Consolas", "SFMono-Regular", monospace;
+  font-size: 0.9rem;
+}
+
+.hero-terminal p {
+  margin: 0;
+}
+
+.hero-github {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 18px;
+  font-weight: 900;
+}
+
+.hero-github svg {
+  color: #29d3a6;
 }
 
 .eyebrow {
@@ -251,7 +379,10 @@ h3 {
 .timeline article,
 .case-block,
 .contact-form,
-.admin-placeholder {
+.admin-placeholder,
+.architecture-node,
+.roadmap-card,
+.folder-panel {
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--surface);
@@ -288,9 +419,386 @@ h3 {
   padding: 72px 0 0;
 }
 
+.selected-work-section {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  min-height: 100svh;
+  margin-top: 72px;
+  padding: 0;
+  scroll-margin: 0;
+  scroll-snap-align: start;
+}
+
+.selected-work-section::before {
+  content: none;
+}
+
 .section-head {
   max-width: 760px;
   margin-bottom: 26px;
+}
+
+.section-head p {
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.project-showcase {
+  position: relative;
+  display: grid;
+  min-height: 100svh;
+  width: 100%;
+  place-items: center;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--showcase-accent) 30%, transparent), transparent 52%),
+    var(--showcase-gradient);
+  box-shadow: 0 34px 100px rgba(15, 23, 42, 0.24);
+  isolation: isolate;
+  perspective: 1500px;
+  perspective-origin: 50% 48%;
+}
+
+.showcase-copy {
+  position: absolute;
+  top: clamp(22px, 4vh, 42px);
+  left: max(20px, calc((100vw - 1180px) / 2));
+  z-index: 4;
+  color: #fff;
+}
+
+.showcase-copy .eyebrow {
+  color: color-mix(in srgb, var(--showcase-accent) 82%, #fff);
+}
+
+.showcase-copy h2 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(2rem, 4.6vw, 4.25rem);
+  text-shadow: 0 18px 48px rgba(2, 6, 23, 0.32);
+}
+
+.showcase-background {
+  position: absolute;
+  inset: -80px;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 20% 20%, color-mix(in srgb, var(--showcase-accent) 48%, transparent), transparent 32%),
+    radial-gradient(circle at 78% 24%, rgba(255, 255, 255, 0.18), transparent 26%),
+    var(--showcase-gradient);
+  filter: blur(34px);
+  opacity: 0.82;
+  transform: scale(1.08);
+  transition: background 260ms ease, opacity 260ms ease;
+}
+
+.project-showcase::after {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    rgba(2, 6, 23, 0.24);
+  background-size: 46px 46px;
+  content: "";
+  mask-image: linear-gradient(to bottom, #000, rgba(0, 0, 0, 0.74));
+}
+
+.showcase-stage {
+  position: relative;
+  z-index: 2;
+  width: min(900px, 72vw);
+  height: min(650px, 68vh);
+  transform-style: preserve-3d;
+}
+
+.showcase-card {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--project-border);
+  border-radius: 8px;
+  background: var(--project-panel-bg), var(--project-gradient);
+  box-shadow: var(--project-glow);
+  backface-visibility: hidden;
+  color: #f8fafc;
+  cursor: pointer;
+  transform-origin: center center;
+  transform-style: preserve-3d;
+  will-change: transform, opacity, filter;
+}
+
+.showcase-card.active {
+  cursor: default;
+}
+
+.showcase-card-link {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.showcase-card.side {
+  box-shadow:
+    0 20px 70px rgba(2, 6, 23, 0.24),
+    0 0 0 1px color-mix(in srgb, var(--project-accent) 10%, transparent);
+}
+
+.showcase-card::before {
+  display: block;
+  height: 5px;
+  background: var(--project-accent);
+  content: "";
+}
+
+.showcase-preview {
+  min-height: 250px;
+  background: var(--project-gradient);
+}
+
+.showcase-preview .project-preview {
+  min-height: 250px;
+  border-radius: 0;
+}
+
+.showcase-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 14px;
+  padding: 26px;
+}
+
+.showcase-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: color-mix(in srgb, var(--project-muted) 72%, #fff);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.showcase-meta strong {
+  border-radius: 999px;
+  background: var(--project-active-bg);
+  padding: 6px 9px;
+  color: #fff;
+}
+
+.showcase-card h3 {
+  margin: 0;
+  color: #fff;
+  font-family: "Space Grotesk", Inter, system-ui, sans-serif;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  line-height: 0.95;
+}
+
+.showcase-card p {
+  color: #475569;
+  line-height: 1.58;
+}
+
+.showcase-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  color: var(--project-accent);
+  font-weight: 900;
+}
+
+.showcase-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 4;
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  background: rgba(2, 6, 23, 0.72);
+  color: #fff;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+.showcase-arrow:hover {
+  background: color-mix(in srgb, var(--showcase-accent) 32%, rgba(2, 6, 23, 0.82));
+  transform: translateY(-50%) scale(1.05);
+}
+
+.showcase-arrow.left {
+  left: max(18px, calc((100vw - 1180px) / 2));
+}
+
+.showcase-arrow.right {
+  right: max(18px, calc((100vw - 1180px) / 2));
+}
+
+.showcase-dots {
+  position: absolute;
+  bottom: clamp(18px, 4vh, 34px);
+  z-index: 4;
+  display: flex;
+  gap: 8px;
+  border-radius: 999px;
+  background: rgba(2, 6, 23, 0.5);
+  padding: 8px 10px;
+  backdrop-filter: blur(16px);
+}
+
+.showcase-dots button {
+  width: 9px;
+  height: 9px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.38);
+  cursor: pointer;
+  padding: 0;
+}
+
+.showcase-dots button.active {
+  width: 24px;
+  background: var(--showcase-accent);
+}
+
+.architecture-flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.architecture-node {
+  position: relative;
+  min-height: 190px;
+  padding: 20px;
+}
+
+.architecture-node:not(:last-child)::after {
+  position: absolute;
+  top: 50%;
+  right: -10px;
+  z-index: 2;
+  width: 18px;
+  height: 2px;
+  background: #0f766e;
+  content: "";
+}
+
+.architecture-node svg {
+  color: #0f766e;
+}
+
+.architecture-node h3,
+.folder-panel h3,
+.roadmap-card h3 {
+  margin: 14px 0 8px;
+}
+
+.architecture-node p,
+.folder-panel p,
+.roadmap-card li {
+  color: var(--muted);
+}
+
+.blueprint-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+  gap: 18px;
+}
+
+.roadmap-board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.roadmap-card {
+  min-height: 210px;
+  padding: 18px;
+}
+
+.roadmap-card div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.roadmap-card span,
+.roadmap-card strong {
+  border-radius: 999px;
+  padding: 6px 9px;
+  font-size: 0.76rem;
+  font-weight: 900;
+}
+
+.roadmap-card span {
+  background: #111827;
+  color: #fff;
+}
+
+.roadmap-card strong {
+  background: rgba(15, 118, 110, 0.11);
+  color: #0f766e;
+}
+
+.roadmap-card.status-next strong {
+  background: rgba(215, 155, 49, 0.14);
+  color: #9a6513;
+}
+
+.roadmap-card.status-later strong {
+  background: rgba(100, 116, 139, 0.14);
+  color: #475569;
+}
+
+.roadmap-card ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.folder-panel {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  padding: 22px;
+}
+
+.folder-panel svg {
+  color: #d79b31;
+}
+
+.folder-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 22px;
+}
+
+.folder-list span {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.68);
+  padding: 8px 10px;
+  color: #334155;
+  font-size: 0.84rem;
+  font-weight: 800;
 }
 
 .project-grid {
@@ -299,12 +807,53 @@ h3 {
   gap: 18px;
 }
 
+.project-card-frame {
+  display: flex;
+  min-width: 0;
+}
+
 .project-card {
   display: flex;
+  width: 100%;
   min-height: 520px;
   flex-direction: column;
   overflow: hidden;
+  border-color: var(--project-border);
+  background: var(--project-panel-bg), var(--project-gradient);
+  box-shadow: var(--project-glow);
+  color: #111827;
+  cursor: pointer;
+  text-decoration: none;
   transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.project-card::before {
+  display: block;
+  height: 4px;
+  background: var(--project-accent);
+  content: "";
+}
+
+.card-style-terminal {
+  border-color: color-mix(in srgb, var(--project-accent) 42%, rgba(255, 255, 255, 0.16));
+}
+
+.card-style-terminal .project-card-body {
+  background-image: linear-gradient(180deg, color-mix(in srgb, var(--project-accent) 10%, transparent), transparent);
+}
+
+.card-style-industrial {
+  background:
+    radial-gradient(circle at 18% 10%, color-mix(in srgb, var(--project-accent) 18%, transparent), transparent 36%),
+    var(--project-card-bg),
+    var(--project-gradient);
+}
+
+.card-style-glow,
+.card-style-studio {
+  box-shadow:
+    var(--project-glow),
+    0 0 52px color-mix(in srgb, var(--project-accent) 12%, transparent);
 }
 
 .project-card-body {
@@ -312,11 +861,20 @@ h3 {
   flex: 1;
   flex-direction: column;
   gap: 14px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(248, 250, 252, 0.82)),
+    color-mix(in srgb, var(--project-accent) 8%, #ffffff);
   padding: 18px;
+  color: #111827;
 }
 
 .project-card h2 {
+  color: #111827;
   font-size: 1.55rem;
+}
+
+.project-card .eyebrow {
+  color: color-mix(in srgb, var(--project-accent) 56%, #475569);
 }
 
 .card-link {
@@ -324,7 +882,7 @@ h3 {
   align-items: center;
   gap: 8px;
   margin-top: auto;
-  color: #0f766e;
+  color: var(--project-accent);
   font-weight: 900;
 }
 
@@ -351,12 +909,42 @@ h3 {
   font-size: 0.78rem;
 }
 
+.project-card p,
+.project-card .project-card-body p {
+  color: #475569;
+}
+
+.showcase-card .tech-stack span,
+.project-shell .tech-stack span {
+  border-color: color-mix(in srgb, var(--project-accent) 22%, rgba(255, 255, 255, 0.12));
+  background: rgba(255, 255, 255, 0.1);
+  color: #eef2ff;
+}
+
+.project-card .tech-stack span {
+  border-color: color-mix(in srgb, var(--project-accent) 28%, rgba(15, 23, 42, 0.14));
+  background: rgba(255, 255, 255, 0.78);
+  color: #334155;
+}
+
+.showcase-card p,
+.project-shell .lead,
+.project-shell .case-block p {
+  color: var(--project-muted);
+}
+
+.project-card:focus-visible,
+.showcase-card-link:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--project-accent) 68%, #fff);
+  outline-offset: 4px;
+}
+
 .project-preview {
   display: grid;
   min-height: 260px;
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--project-accent) 18%, transparent), transparent),
-    #101827;
+    var(--project-gradient);
 }
 
 .project-preview.compact {
@@ -433,6 +1021,682 @@ h3 {
   gap: 18px;
 }
 
+.workflow-section {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  padding: 110px max(18px, calc((100vw - 1180px) / 2)) 60px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 18% 18%, color-mix(in srgb, var(--project-accent) 24%, transparent), transparent 30%),
+    linear-gradient(180deg, rgba(15, 23, 42, 0.02), rgba(15, 23, 42, 0.07));
+}
+
+.workflow-intro {
+  max-width: 780px;
+  margin-bottom: 46px;
+}
+
+.workflow-intro p:last-child {
+  color: var(--muted);
+  font-size: 1.08rem;
+  line-height: 1.7;
+}
+
+.workflow-tree {
+  position: relative;
+  display: grid;
+  gap: 42px;
+  perspective: 1300px;
+}
+
+.workflow-axis {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 3px;
+  border-radius: 999px;
+  background:
+    linear-gradient(
+      to bottom,
+      transparent,
+      color-mix(in srgb, var(--project-accent) 72%, #fff),
+      color-mix(in srgb, var(--project-accent) 28%, #111827),
+      transparent
+    );
+  box-shadow: 0 0 36px color-mix(in srgb, var(--project-accent) 38%, transparent);
+  transform: translateX(-50%);
+}
+
+.workflow-row {
+  position: relative;
+  display: grid;
+  min-height: 220px;
+  align-items: center;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  transform-style: preserve-3d;
+}
+
+.workflow-row::before {
+  position: absolute;
+  top: 50%;
+  width: min(18vw, 210px);
+  height: 2px;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--project-accent) 54%, transparent));
+  content: "";
+}
+
+.workflow-row.left::before {
+  left: calc(50% - min(18vw, 210px));
+}
+
+.workflow-row.right::before {
+  left: 50%;
+  transform: scaleX(-1);
+}
+
+.workflow-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  width: 17px;
+  height: 17px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: var(--project-accent);
+  box-shadow:
+    0 0 0 8px color-mix(in srgb, var(--project-accent) 14%, transparent),
+    0 0 26px color-mix(in srgb, var(--project-accent) 46%, transparent);
+  transform: translate(-50%, -50%);
+}
+
+.workflow-card {
+  position: relative;
+  z-index: 2;
+  max-width: 520px;
+  border: 1px solid color-mix(in srgb, var(--project-accent) 28%, var(--line));
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.76)),
+    var(--project-gradient);
+  box-shadow:
+    0 24px 80px rgba(15, 23, 42, 0.14),
+    0 0 0 1px color-mix(in srgb, var(--project-accent) 12%, transparent);
+  padding: 22px;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+
+.workflow-row.left .workflow-card {
+  grid-column: 1;
+  justify-self: end;
+  margin-right: 58px;
+}
+
+.workflow-row.right .workflow-card {
+  grid-column: 2;
+  justify-self: start;
+  margin-left: 58px;
+}
+
+.workflow-kicker {
+  display: inline-flex;
+  margin-bottom: 12px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--project-accent) 13%, rgba(255, 255, 255, 0.9));
+  padding: 7px 10px;
+  color: color-mix(in srgb, var(--project-accent) 78%, #111827);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.workflow-card h3 {
+  margin-bottom: 12px;
+  font-family: "Space Grotesk", Inter, system-ui, sans-serif;
+  font-size: clamp(1.55rem, 2.4vw, 2.25rem);
+  line-height: 1;
+}
+
+.workflow-card p,
+.workflow-card li {
+  color: #475569;
+  line-height: 1.58;
+}
+
+.workflow-card ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.workflow-card li {
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  padding: 7px 10px;
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.workflow-tone-test {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(237, 242, 255, 0.78)),
+    var(--project-gradient);
+}
+
+.workflow-tone-result {
+  border-color: color-mix(in srgb, #29d3a6 42%, var(--line));
+}
+
+.workflow-tone-next {
+  border-color: color-mix(in srgb, #ff5c93 34%, var(--line));
+}
+
+.workflow-scroll {
+  --journey-progress: 0;
+  --connector-presence: 1;
+  position: relative;
+  width: 100vw;
+  height: calc(var(--journey-count) * 100vh);
+  margin-left: calc(50% - 50vw);
+  background: #050711;
+  color: #f8fafc;
+}
+
+.workflow-sticky {
+  --workflow-axis-x: clamp(27%, 37vw, 42%);
+  --workflow-axis-top: 18%;
+  --workflow-axis-height: 64%;
+  --workflow-card-gap: clamp(54px, 6vw, 118px);
+  --workflow-card-width: min(700px, 47vw);
+  --workflow-card-height: min(430px, 48vh);
+  --workflow-card-half: min(215px, 24vh);
+  --workflow-connector-y: 52%;
+  position: sticky;
+  top: 0;
+  display: grid;
+  height: 100vh;
+  place-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 18% 20%, rgba(124, 92, 255, 0.2), transparent 28%),
+    radial-gradient(circle at 78% 74%, rgba(41, 211, 166, 0.12), transparent 26%),
+    linear-gradient(135deg, #050711 0%, #0b1020 52%, #070713 100%);
+  isolation: isolate;
+  perspective: 1500px;
+  perspective-origin: 50% 50%;
+}
+
+.journey-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: radial-gradient(circle at center, #000 0%, rgba(0, 0, 0, 0.82) 46%, transparent 82%);
+}
+
+.journey-copy {
+  position: absolute;
+  top: clamp(28px, 5vh, 56px);
+  left: max(20px, calc((100vw - 1180px) / 2));
+  z-index: 5;
+  max-width: 520px;
+  transition:
+    opacity 420ms ease,
+    transform 420ms ease;
+}
+
+.journey-sticky.is-intro-hidden .journey-copy {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-14px);
+}
+
+.journey-copy .eyebrow {
+  color: color-mix(in srgb, var(--project-accent) 78%, #fff);
+}
+
+.journey-copy h2 {
+  margin-bottom: 14px;
+  color: #fff;
+  font-size: clamp(2rem, 4.3vw, 4.25rem);
+}
+
+.journey-copy p:last-child {
+  color: #aab3c5;
+  line-height: 1.65;
+}
+
+.journey-axis {
+  position: absolute;
+  top: var(--workflow-axis-top);
+  left: var(--workflow-axis-x);
+  z-index: 7;
+  display: grid;
+  width: 42px;
+  height: var(--workflow-axis-height);
+  place-items: center;
+  pointer-events: none;
+  transform: translateX(-50%);
+  transition: opacity 360ms ease;
+}
+
+.journey-sticky:not(.is-intro-hidden) .journey-axis {
+  opacity: 0;
+}
+
+.journey-axis-line,
+.journey-axis-fill {
+  position: absolute;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  border-radius: 999px;
+}
+
+.journey-axis-line {
+  background:
+    linear-gradient(
+      to bottom,
+      transparent,
+      rgba(255, 255, 255, 0.28),
+      color-mix(in srgb, var(--project-accent) 34%, rgba(255, 255, 255, 0.18)),
+      transparent
+    );
+  box-shadow: 0 0 26px color-mix(in srgb, var(--project-accent) 22%, transparent);
+}
+
+.journey-axis-fill {
+  background:
+    linear-gradient(
+      to bottom,
+      transparent,
+      color-mix(in srgb, var(--project-accent) 88%, #fff),
+      color-mix(in srgb, var(--project-accent) 46%, transparent),
+      transparent
+    );
+  box-shadow:
+    0 0 30px color-mix(in srgb, var(--project-accent) 38%, transparent),
+    0 0 80px rgba(124, 92, 255, 0.18);
+  opacity: 0.9;
+  transform: scaleY(var(--journey-progress));
+  transform-origin: top;
+  transition: transform 240ms ease-out;
+}
+
+.journey-points {
+  position: relative;
+  display: grid;
+  height: 100%;
+  align-content: space-between;
+  justify-items: center;
+}
+
+.journey-point {
+  position: relative;
+  z-index: 2;
+  width: 9px;
+  height: 9px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.24);
+  box-shadow: 0 0 0 0 transparent;
+  opacity: 0.58;
+  transition: width 320ms ease, height 320ms ease, opacity 320ms ease, background 320ms ease, box-shadow 320ms ease;
+}
+
+.journey-point.state-passed {
+  background: color-mix(in srgb, var(--project-accent) 62%, #fff);
+  opacity: 0.72;
+}
+
+.journey-point.state-next {
+  width: 11px;
+  height: 11px;
+  opacity: 0.78;
+}
+
+.journey-point.state-active {
+  width: 22px;
+  height: 22px;
+  border-color: rgba(255, 255, 255, 0.86);
+  background: var(--project-accent);
+  opacity: 1;
+  box-shadow:
+    0 0 0 10px color-mix(in srgb, var(--project-accent) 14%, transparent),
+    0 0 34px color-mix(in srgb, var(--project-accent) 52%, transparent);
+}
+
+.journey-active-node {
+  position: absolute;
+  top: var(--workflow-connector-y);
+  left: var(--workflow-axis-x);
+  z-index: 8;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.84);
+  background: var(--project-accent);
+  box-shadow:
+    0 0 0 10px color-mix(in srgb, var(--project-accent) 13%, transparent),
+    0 0 34px color-mix(in srgb, var(--project-accent) 50%, transparent);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(calc(0.72 + (var(--connector-presence) * 0.28)));
+  transition:
+    opacity 260ms ease,
+    transform 320ms ease;
+  pointer-events: none;
+}
+
+.journey-sticky.is-intro-hidden .journey-active-node {
+  opacity: 1;
+}
+
+.journey-connector {
+  position: absolute;
+  top: var(--workflow-connector-y);
+  left: var(--workflow-axis-x);
+  z-index: 5;
+  width: var(--workflow-card-gap);
+  height: 16px;
+  opacity: 0;
+  transform: translateY(-50%);
+  transition:
+    opacity 220ms ease;
+  pointer-events: none;
+}
+
+.journey-connector-segment {
+  position: absolute;
+  top: 50%;
+  width: 50%;
+  height: 1px;
+  border-radius: 999px;
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--project-accent) 78%, #fff),
+      color-mix(in srgb, var(--project-accent) 34%, rgba(255, 255, 255, 0.06))
+    );
+  box-shadow: 0 0 16px color-mix(in srgb, var(--project-accent) 32%, transparent);
+  transform: translateY(-50%);
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.journey-connector-segment.from-axis {
+  left: 0;
+  transform: translateY(-50%) scaleX(var(--connector-presence));
+  transform-origin: left center;
+}
+
+.journey-connector-segment.from-card {
+  right: 0;
+  transform: translateY(-50%) scaleX(var(--connector-presence));
+  transform-origin: right center;
+}
+
+.journey-connector-segment.from-card {
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--project-accent) 34%, rgba(255, 255, 255, 0.06)),
+      color-mix(in srgb, var(--project-accent) 72%, #fff)
+    );
+}
+
+.journey-sticky.is-intro-hidden .journey-connector {
+  opacity: 0.86;
+}
+
+.journey-stage {
+  position: absolute;
+  top: calc(var(--workflow-connector-y) - var(--workflow-card-half));
+  left: calc(var(--workflow-axis-x) + var(--workflow-card-gap));
+  z-index: 3;
+  width: var(--workflow-card-width);
+  height: var(--workflow-card-height);
+  transform: none;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+
+.journey-card {
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  color: #f8fafc;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transform: translate3d(0, 0, -520px) rotateY(0deg) scale(0.78);
+  opacity: 0;
+  filter: blur(5px);
+  pointer-events: none;
+  transition:
+    transform 760ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 520ms ease,
+    filter 520ms ease,
+    border-color 520ms ease,
+    box-shadow 520ms ease;
+  will-change: auto;
+}
+
+.journey-card-surface {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid var(--workflow-card-border);
+  border-radius: inherit;
+  background: var(--workflow-card-bg);
+  box-shadow: var(--workflow-card-glow);
+  padding: clamp(22px, 3vw, 34px);
+  text-rendering: geometricprecision;
+  -webkit-font-smoothing: antialiased;
+}
+
+.journey-card.state-active {
+  z-index: 6;
+  transform: none;
+  transform-style: flat;
+  opacity: 1;
+  filter: none;
+  pointer-events: auto;
+  will-change: auto;
+}
+
+.journey-card.state-active .journey-card-surface {
+  border-color: color-mix(in srgb, var(--project-accent) 42%, rgba(255, 255, 255, 0.16));
+  box-shadow:
+    var(--workflow-card-glow),
+    0 30px 110px rgba(0, 0, 0, 0.48),
+    0 0 0 1px color-mix(in srgb, var(--project-accent) 20%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.13);
+}
+
+.journey-card.state-previous {
+  z-index: 3;
+  transform: translate3d(-42vw, 34px, -260px) rotateY(38deg) scale(0.84);
+  opacity: 0.46;
+  filter: blur(3px);
+  will-change: transform, opacity, filter;
+}
+
+.journey-card.state-next {
+  z-index: 3;
+  transform: translate3d(42vw, 34px, -260px) rotateY(-38deg) scale(0.84);
+  opacity: 0.46;
+  filter: blur(3px);
+  will-change: transform, opacity, filter;
+}
+
+.journey-card.state-previous-far {
+  z-index: 1;
+  transform: translate3d(-54vw, 72px, -520px) rotateY(54deg) scale(0.7);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.journey-card.state-next-far {
+  z-index: 1;
+  transform: translate3d(54vw, 72px, -520px) rotateY(-54deg) scale(0.7);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.journey-card-surface::before {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 16% 12%, color-mix(in srgb, var(--project-accent) 18%, transparent), transparent 36%),
+    linear-gradient(90deg, color-mix(in srgb, var(--project-accent) 46%, transparent), transparent 32%);
+  content: "";
+  opacity: 0.62;
+  pointer-events: none;
+}
+
+.journey-card-surface > * {
+  position: relative;
+  z-index: 1;
+}
+
+.journey-kicker {
+  display: inline-flex;
+  width: fit-content;
+  margin-bottom: 16px;
+  border: 1px solid color-mix(in srgb, var(--project-accent) 34%, rgba(255, 255, 255, 0.14));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--project-accent) 14%, rgba(255, 255, 255, 0.08));
+  padding: 7px 11px;
+  color: color-mix(in srgb, var(--project-accent) 74%, #fff);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.journey-card h3 {
+  max-width: 680px;
+  margin-bottom: 14px;
+  color: #fff;
+  font-family: "Space Grotesk", Inter, system-ui, sans-serif;
+  font-size: clamp(2rem, 4vw, 3.45rem);
+  line-height: 0.98;
+}
+
+.journey-card p {
+  max-width: 660px;
+  color: #c5ccda;
+  font-size: clamp(1rem, 1.55vw, 1.2rem);
+  line-height: 1.62;
+}
+
+.journey-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 20px;
+}
+
+.journey-metrics span {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 8px 11px;
+  color: #eef2ff;
+  font-size: 0.84rem;
+  font-weight: 850;
+}
+
+.journey-insight {
+  margin-top: 18px;
+  border-left: 3px solid var(--project-accent);
+  padding-left: 14px;
+  color: #f8fafc !important;
+}
+
+.journey-tone-test {
+  border-color: color-mix(in srgb, var(--project-accent) 28%, rgba(255, 255, 255, 0.14));
+}
+
+.journey-tone-result {
+  border-color: rgba(41, 211, 166, 0.36);
+}
+
+.journey-tone-next {
+  border-color: rgba(255, 92, 147, 0.34);
+}
+
+.journey-progress {
+  position: absolute;
+  right: max(18px, calc((100vw - 1180px) / 2));
+  bottom: clamp(22px, 5vh, 46px);
+  z-index: 6;
+  display: flex;
+  gap: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  background: rgba(3, 7, 18, 0.48);
+  padding: 9px 11px;
+  backdrop-filter: blur(18px);
+}
+
+.journey-progress span {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.34);
+  transition: width 180ms ease, background 180ms ease;
+}
+
+.journey-progress span.state-passed {
+  background: color-mix(in srgb, var(--project-accent) 48%, rgba(255, 255, 255, 0.34));
+}
+
+.journey-progress span.state-active {
+  width: 28px;
+  background: var(--project-accent);
+}
+
+@media (min-width: 941px) {
+  .journey-copy {
+    top: clamp(24px, 4vh, 42px);
+    max-width: min(430px, 32vw);
+  }
+
+  .journey-copy h2 {
+    font-size: clamp(2rem, 3.8vw, 4.35rem);
+  }
+
+  .journey-stage {
+    --workflow-card-height: min(420px, 46vh);
+    --workflow-card-half: min(210px, 23vh);
+    transition:
+      top 420ms ease,
+      opacity 320ms ease;
+  }
+
+  .journey-sticky:not(.is-intro-hidden) .journey-stage {
+    top: calc(66% - var(--workflow-card-half));
+    opacity: 0.72;
+  }
+}
+
 .cv-panel,
 .case-block,
 .timeline article,
@@ -473,9 +1737,48 @@ h3 {
   --project-accent: #7c5cff;
 }
 
+.project-page {
+  width: auto;
+  max-width: none;
+  margin-right: calc(50% - 50vw);
+  margin-left: calc(50% - 50vw);
+  background: var(--project-page-bg), var(--project-gradient);
+  padding-right: max(16px, calc((100vw - 1180px) / 2));
+  padding-left: max(16px, calc((100vw - 1180px) / 2));
+  color: #f8fafc;
+}
+
+.project-shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  background: transparent;
+  color: #f8fafc;
+}
+
 .project-hero {
-  border-bottom: 1px solid var(--line);
-  padding: 34px 0 48px;
+  border: 1px solid var(--project-border);
+  border-radius: 8px;
+  background: var(--project-panel-bg), var(--project-gradient);
+  box-shadow: var(--project-glow);
+  padding: 34px 24px 48px;
+}
+
+.project-hero h1,
+.project-hero h2,
+.project-shell .case-block h2 {
+  color: #fff;
+}
+
+.project-shell .button-primary {
+  background: color-mix(in srgb, var(--project-accent) 22%, #0b1020);
+  color: #fff;
+  box-shadow: 0 18px 48px color-mix(in srgb, var(--project-accent) 18%, rgba(0, 0, 0, 0.24));
+}
+
+.project-shell .button-secondary {
+  border-color: var(--project-border);
+  background: rgba(255, 255, 255, 0.1);
+  color: #eef2ff;
 }
 
 .project-metrics {
@@ -485,10 +1788,19 @@ h3 {
 }
 
 .project-metrics div {
+  border: 1px solid var(--project-border);
   border-left: 4px solid var(--project-accent);
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--project-card-bg);
+  box-shadow: var(--project-glow);
   padding: 18px;
+  color: #f8fafc;
   font-weight: 900;
+}
+
+.project-shell .case-block {
+  border-color: var(--project-border);
+  background: var(--project-card-bg);
+  box-shadow: var(--project-glow);
 }
 
 .next-project {
@@ -498,9 +1810,10 @@ h3 {
 .next-project a {
   display: grid;
   gap: 10px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--project-border);
   border-radius: 8px;
-  background: #111827;
+  background: var(--project-panel-bg), var(--project-gradient);
+  box-shadow: var(--project-glow);
   padding: 24px;
   color: #fff;
 }
@@ -561,16 +1874,45 @@ h3 {
 
 @media (max-width: 940px) {
   .section-grid,
+  .hero-section,
   .project-grid,
   .cv-grid,
   .case-grid,
-  .project-metrics {
+  .project-metrics,
+  .architecture-flow,
+  .blueprint-grid,
+  .roadmap-board {
     grid-template-columns: 1fr;
+  }
+
+  .architecture-node {
+    min-height: auto;
+  }
+
+  .architecture-node:not(:last-child)::after {
+    top: auto;
+    right: 50%;
+    bottom: -10px;
+    width: 2px;
+    height: 18px;
   }
 
   .hero-section {
     min-height: auto;
     padding-top: 38px;
+  }
+
+  .project-showcase {
+    min-height: 100svh;
+  }
+
+  .showcase-stage {
+    width: min(680px, 82vw);
+    height: min(620px, 66vh);
+  }
+
+  .showcase-card h3 {
+    font-size: 2.35rem;
   }
 
   .nav-links {
@@ -579,6 +1921,62 @@ h3 {
 
   .icon-button {
     display: grid;
+  }
+
+  .workflow-section {
+    padding-inline: 18px;
+  }
+
+  .workflow-axis {
+    left: 22px;
+  }
+
+  .workflow-row {
+    min-height: auto;
+    grid-template-columns: 1fr;
+    padding-left: 44px;
+  }
+
+  .workflow-row::before {
+    left: 22px;
+    width: 36px;
+  }
+
+  .workflow-row.left::before,
+  .workflow-row.right::before {
+    left: 22px;
+    transform: none;
+  }
+
+  .workflow-dot {
+    left: 22px;
+  }
+
+  .workflow-row.left .workflow-card,
+  .workflow-row.right .workflow-card {
+    grid-column: 1;
+    justify-self: stretch;
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .workflow-sticky {
+    --workflow-axis-x: clamp(92px, 28vw, 245px);
+    --workflow-axis-top: 20%;
+    --workflow-axis-height: 60%;
+    --workflow-card-gap: clamp(40px, 6vw, 64px);
+    --workflow-card-width: min(560px, 58vw);
+  }
+
+  .journey-stage {
+    --workflow-card-height: min(450px, 48vh);
+    --workflow-card-half: min(225px, 24vh);
+    width: var(--workflow-card-width);
+    height: var(--workflow-card-height);
+  }
+
+  .journey-card h3 {
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
   }
 }
 
@@ -606,5 +2004,223 @@ h3 {
   .diagram-preview span {
     width: 2px;
     height: 18px;
+  }
+
+  .selected-work-section {
+    min-height: 100svh;
+    margin-top: 54px;
+    padding: 0;
+  }
+
+  .project-showcase {
+    min-height: 100svh;
+    padding: 92px 0 82px;
+  }
+
+  .showcase-stage {
+    width: calc(100% - 44px);
+    height: min(620px, calc(100svh - 182px));
+  }
+
+  .showcase-copy {
+    top: 18px;
+    left: 14px;
+  }
+
+  .showcase-copy h2 {
+    font-size: 2rem;
+  }
+
+  .showcase-card.side {
+    visibility: hidden;
+  }
+
+  .showcase-card {
+    overflow-y: auto;
+  }
+
+  .showcase-preview,
+  .showcase-preview .project-preview {
+    min-height: 165px;
+  }
+
+  .showcase-card-body {
+    gap: 10px;
+    padding: 16px;
+  }
+
+  .showcase-card h3 {
+    font-size: 1.75rem;
+    line-height: 1;
+  }
+
+  .showcase-card p {
+    font-size: 0.92rem;
+    line-height: 1.45;
+  }
+
+  .showcase-meta {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .showcase-card .tech-stack span {
+    padding: 6px 8px;
+    font-size: 0.72rem;
+  }
+
+  .showcase-arrow {
+    width: 40px;
+    height: 40px;
+  }
+
+  .showcase-arrow.left {
+    left: 8px;
+  }
+
+  .showcase-arrow.right {
+    right: 8px;
+  }
+
+  .workflow-section {
+    padding: 72px 12px 36px;
+  }
+
+  .workflow-intro {
+    margin-bottom: 28px;
+    padding-left: 34px;
+  }
+
+  .workflow-tree {
+    gap: 28px;
+  }
+
+  .workflow-card {
+    padding: 18px;
+  }
+
+  .workflow-card h3 {
+    font-size: 1.55rem;
+  }
+
+  .workflow-card p,
+  .workflow-card li {
+    font-size: 0.92rem;
+  }
+
+  .workflow-scroll {
+    height: calc(var(--journey-count) * 100vh);
+  }
+
+  .workflow-sticky {
+    --workflow-axis-x: 46px;
+    --workflow-axis-top: 34%;
+    --workflow-axis-height: 50%;
+    --workflow-card-width: calc(100% - 88px);
+  }
+
+  .journey-copy {
+    top: 18px;
+    left: 14px;
+    right: 14px;
+    max-width: none;
+  }
+
+  .journey-copy h2 {
+    margin-bottom: 8px;
+    font-size: 1.85rem;
+  }
+
+  .journey-copy p:last-child {
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+
+  .journey-axis::before {
+    height: 62%;
+  }
+
+  .journey-axis {
+    width: 26px;
+  }
+
+  .journey-connector {
+    display: none;
+  }
+
+  .journey-stage {
+    --workflow-card-height: min(430px, 54vh);
+    --workflow-card-half: min(215px, 27vh);
+    top: calc(60% - var(--workflow-card-half));
+    left: 46px;
+    width: var(--workflow-card-width);
+    height: var(--workflow-card-height);
+    transform: none;
+  }
+
+  .journey-sticky:not(.is-intro-hidden) .journey-stage {
+    top: calc(70% - var(--workflow-card-half));
+    opacity: 0.56;
+  }
+
+  .journey-card-surface {
+    justify-content: flex-start;
+    overflow-y: auto;
+    padding: 18px;
+  }
+
+  .journey-card.state-active {
+    transform: none;
+    transform-style: flat;
+    opacity: 1;
+    filter: none;
+  }
+
+  .journey-card.state-previous {
+    transform: translate3d(0, -86px, -80px) rotateY(0deg) scale(0.92);
+    opacity: 0.22;
+    filter: blur(4px);
+  }
+
+  .journey-card.state-next {
+    transform: translate3d(0, 86px, -80px) rotateY(0deg) scale(0.92);
+    opacity: 0.28;
+    filter: blur(3px);
+  }
+
+  .journey-card.state-previous-far {
+    transform: translate3d(0, -156px, -120px) rotateY(0deg) scale(0.82);
+    opacity: 0;
+  }
+
+  .journey-card.state-next-far {
+    transform: translate3d(0, 156px, -120px) rotateY(0deg) scale(0.82);
+    opacity: 0;
+  }
+
+  .journey-card h3 {
+    font-size: 1.75rem;
+  }
+
+  .journey-card p {
+    font-size: 0.94rem;
+    line-height: 1.48;
+  }
+
+  .journey-metrics {
+    gap: 7px;
+    margin-top: 14px;
+  }
+
+  .journey-metrics span {
+    padding: 6px 8px;
+    font-size: 0.74rem;
+  }
+
+  .journey-progress {
+    right: 50%;
+    bottom: 16px;
+    transform: translateX(50%);
   }
 }

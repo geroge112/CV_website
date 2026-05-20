@@ -18,7 +18,7 @@ export default function ProjectPage() {
   }
 
   return (
-    <motion.div className="page compact-page" {...pageTransition}>
+    <motion.div className="page compact-page project-page" {...pageTransition}>
       <ProjectLayout project={project} nextProject={nextProject} />
     </motion.div>
   );
