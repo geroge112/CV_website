@@ -2206,3 +2206,115 @@ h3 {
     transform: translateX(50%);
   }
 }
+
+@media (max-width: 768px) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animated-background {
+    position: absolute;
+  }
+
+  .scan-line {
+    display: none;
+    animation: none;
+  }
+
+  .brand,
+  .nav-links,
+  .site-footer,
+  .icon-button,
+  .hero-badges span,
+  .system-card,
+  .project-card,
+  .cv-panel,
+  .timeline article,
+  .case-block,
+  .contact-form,
+  .admin-placeholder,
+  .architecture-node,
+  .roadmap-card,
+  .folder-panel,
+  .showcase-dots,
+  .journey-progress {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .hero-panel,
+  .system-card,
+  .project-card,
+  .project-card-frame,
+  .showcase-card,
+  .journey-card-surface,
+  .project-detail-panel,
+  .project-next-card {
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.18);
+  }
+
+  .project-showcase {
+    box-shadow: 0 18px 42px rgba(15, 23, 42, 0.2);
+    perspective: none;
+  }
+
+  .showcase-background {
+    filter: none;
+    opacity: 0.58;
+    transform: none;
+  }
+
+  .showcase-stage,
+  .showcase-card,
+  .journey-stage,
+  .journey-card {
+    transform-style: flat !important;
+    will-change: auto !important;
+  }
+
+  .showcase-card,
+  .journey-card,
+  .project-card-frame {
+    filter: none !important;
+  }
+
+  .showcase-card.active {
+    transform: translateY(0) scale(1) !important;
+  }
+
+  .showcase-card.side {
+    visibility: hidden;
+    box-shadow: none;
+    opacity: 0 !important;
+    transform: translateY(16px) scale(0.96) !important;
+  }
+
+  .journey-card.state-active {
+    transform: translateY(0) scale(1) !important;
+    filter: none !important;
+  }
+
+  .journey-card.state-previous {
+    transform: translateY(-54px) scale(0.94) !important;
+    opacity: 0.18;
+    filter: none !important;
+  }
+
+  .journey-card.state-next {
+    transform: translateY(54px) scale(0.94) !important;
+    opacity: 0.22;
+    filter: none !important;
+  }
+
+  .journey-card.state-previous-far {
+    transform: translateY(-96px) scale(0.88) !important;
+    opacity: 0;
+    filter: none !important;
+  }
+
+  .journey-card.state-next-far {
+    transform: translateY(96px) scale(0.88) !important;
+    opacity: 0;
+    filter: none !important;
+  }
+}
