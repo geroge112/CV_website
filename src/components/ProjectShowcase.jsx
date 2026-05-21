@@ -21,6 +21,9 @@ function getCircularOffset(index, activeIndex, length) {
 
 export default function ProjectShowcase({ projects }) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(() => {
+    return typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches;
+  });
   const sectionRef = useRef(null);
   const snappedRef = useRef(false);
   const activeProject = projects[activeIndex];
@@ -34,7 +37,31 @@ export default function ProjectShowcase({ projects }) {
   );
 
   useEffect(() => {
+    const media = window.matchMedia("(max-width: 768px)");
+    const update = () => setIsMobile(media.matches);
+
+    update();
+    if (media.addEventListener) {
+      media.addEventListener("change", update);
+    } else {
+      media.addListener(update);
+    }
+
+    return () => {
+      if (media.removeEventListener) {
+        media.removeEventListener("change", update);
+      } else {
+        media.removeListener(update);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
     const section = sectionRef.current;
+
+    if (window.matchMedia("(max-width: 768px)").matches) {
+      return undefined;
+    }
 
     if (!section) {
       return undefined;
@@ -90,6 +117,10 @@ export default function ProjectShowcase({ projects }) {
             const cylinderX = Math.sin(angleRadians) * cylinderRadius;
             const cylinderZ = Math.cos(angleRadians) * cylinderRadius - cylinderRadius;
 
+            if (isMobile && !isActive) {
+              return null;
+            }
+
             return (
               <motion.article
                 className={`showcase-card ${isActive ? "active" : "side"} card-style-${
@@ -99,22 +130,34 @@ export default function ProjectShowcase({ projects }) {
                 style={{
                   "--project-accent": accent,
                   "--project-gradient": gradient,
-                  pointerEvents: isVisible ? "auto" : "none",
+                  pointerEvents: isMobile || isVisible ? "auto" : "none",
                 }}
-                animate={{
-                  x: cylinderX,
-                  z: cylinderZ,
-                  scale: isActive ? 1 : 0.84,
-                  rotateY: -cylinderAngle,
-                  rotateZ: 0,
-                  opacity: isVisible ? (isActive ? 1 : 0.58) : 0,
-                  filter: isActive ? "blur(0px)" : "blur(3px)",
-                  zIndex: isActive ? 5 : 2 - Math.abs(offset),
-                }}
-                transition={{ type: "spring", stiffness: 170, damping: 24 }}
-                aria-hidden={!isVisible}
+                animate={
+                  isMobile
+                    ? {
+                        opacity: 1,
+                        scale: 1,
+                        x: 0,
+                        z: 0,
+                        rotateY: 0,
+                        filter: "none",
+                        zIndex: 5,
+                      }
+                    : {
+                        x: cylinderX,
+                        z: cylinderZ,
+                        scale: isActive ? 1 : 0.84,
+                        rotateY: -cylinderAngle,
+                        rotateZ: 0,
+                        opacity: isVisible ? (isActive ? 1 : 0.58) : 0,
+                        filter: isActive ? "blur(0px)" : "blur(3px)",
+                        zIndex: isActive ? 5 : 2 - Math.abs(offset),
+                      }
+                }
+                transition={isMobile ? { duration: 0.12, ease: "easeOut" } : { type: "spring", stiffness: 170, damping: 24 }}
+                aria-hidden={!isMobile && !isVisible}
               >
-                <Link className="showcase-card-link" to={`/project/${project.slug}`} tabIndex={isVisible ? 0 : -1}>
+                <Link className="showcase-card-link" to={`/project/${project.slug}`} tabIndex={isMobile || isVisible ? 0 : -1}>
                   <div className="showcase-preview">
                     <ProjectPreview project={project} compact />
                   </div>

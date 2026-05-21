@@ -2318,3 +2318,84 @@ h3 {
     filter: none !important;
   }
 }
+
+@media (max-width: 768px), (hover: none) and (pointer: coarse) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 120ms !important;
+  }
+
+  * {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  .animated-background,
+  .scan-line,
+  .showcase-background {
+    display: none !important;
+  }
+
+  .project-showcase,
+  .showcase-stage,
+  .showcase-card,
+  .journey-stage,
+  .journey-card,
+  .journey-card-surface,
+  .workflow-sticky,
+  .workflow-section {
+    perspective: none !important;
+    transform-style: flat !important;
+    will-change: auto !important;
+    filter: none !important;
+  }
+
+  .showcase-stage {
+    height: auto !important;
+    min-height: auto !important;
+  }
+
+  .showcase-card {
+    position: relative !important;
+    inset: auto !important;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.18) !important;
+  }
+
+  .showcase-card.side {
+    display: none !important;
+  }
+
+  .journey-card.state-previous,
+  .journey-card.state-next,
+  .journey-card.state-previous-far,
+  .journey-card.state-next-far {
+    display: none !important;
+  }
+
+  .journey-card.state-active {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+
+  .journey-card,
+  .journey-card-surface {
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .journey-axis,
+  .journey-progress,
+  .journey-connector {
+    display: none !important;
+  }
+}
