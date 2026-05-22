@@ -19,7 +19,7 @@ function getCircularOffset(index, activeIndex, length) {
   return offset;
 }
 
-export default function ProjectShowcase({ projects }) {
+export default function ProjectShowcase({ projects, enableAutoSnap = true }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(() => {
     return typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches;
@@ -57,6 +57,10 @@ export default function ProjectShowcase({ projects }) {
   }, []);
 
   useEffect(() => {
+    if (!enableAutoSnap) {
+      return undefined;
+    }
+
     const section = sectionRef.current;
 
     if (window.matchMedia("(max-width: 768px)").matches) {
@@ -82,7 +86,7 @@ export default function ProjectShowcase({ projects }) {
     observer.observe(section);
 
     return () => observer.disconnect();
-  }, []);
+  }, [enableAutoSnap]);
 
   const showPrevious = () => {
     setActiveIndex((index) => (index - 1 + projects.length) % projects.length);
@@ -106,6 +110,7 @@ export default function ProjectShowcase({ projects }) {
 
         <div className="showcase-stage">
           {projects.map((project, index) => {
+            const techStack = project.techStack ?? [];
             const offset = getCircularOffset(index, activeIndex, projects.length);
             const isActive = offset === 0;
             const isVisible = Math.abs(offset) <= 1;
@@ -168,7 +173,7 @@ export default function ProjectShowcase({ projects }) {
                     </div>
                     <h3>{project.title}</h3>
                     <p>{project.shortDescription}</p>
-                    <TechStack items={project.techStack.slice(0, 4)} small />
+                    <TechStack items={techStack.slice(0, 4)} small />
                     {isActive && (
                       <span className="showcase-link">
                       Open project

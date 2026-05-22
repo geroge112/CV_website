@@ -6,6 +6,9 @@ import TechStack from "../components/TechStack.jsx";
 
 export default function ProjectLayout({ project, nextProject }) {
   const themeStyle = project.themeStyle ?? {};
+  const metrics = project.metrics ?? [];
+  const blocks = project.blocks ?? [];
+  const techStack = project.techStack ?? [];
   const style = {
     "--project-accent": themeStyle.accent ?? project.accent,
     "--project-gradient": themeStyle.gradient,
@@ -18,7 +21,7 @@ export default function ProjectLayout({ project, nextProject }) {
           <p className="eyebrow">{project.eyebrow}</p>
           <h1>{project.title}</h1>
           <p className="lead">{project.description}</p>
-          <TechStack items={project.techStack} />
+          <TechStack items={techStack} />
           <div className="flex flex-wrap gap-3">
             {project.liveUrl && (
               <a className="button-primary" href={project.liveUrl} target="_blank" rel="noreferrer">
@@ -45,7 +48,7 @@ export default function ProjectLayout({ project, nextProject }) {
 
       <section className="content-section">
         <div className="project-metrics">
-          {project.metrics.map((metric) => (
+          {metrics.map((metric) => (
             <div key={metric}>
               <span>{metric}</span>
             </div>
@@ -54,7 +57,7 @@ export default function ProjectLayout({ project, nextProject }) {
       </section>
 
       <section className="content-section case-grid">
-        {project.blocks.map((block) => (
+        {blocks.map((block) => (
           <article className="case-block" key={block.title}>
             <h2>{block.title}</h2>
             <p>{block.text}</p>

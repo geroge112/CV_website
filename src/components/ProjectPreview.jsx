@@ -1,10 +1,16 @@
 export default function ProjectPreview({ project, compact = false }) {
-  const preview = project.preview;
+  const preview = project?.preview;
+
+  if (!preview) {
+    return null;
+  }
 
   if (preview.kind === "images") {
+    const images = preview.images ?? [];
+
     return (
       <div className={`project-preview image-preview ${compact ? "compact" : ""}`}>
-        {preview.images.map((image, index) => (
+        {images.map((image, index) => (
           <img src={image} alt={`${project.title} preview ${index + 1}`} key={image} />
         ))}
       </div>

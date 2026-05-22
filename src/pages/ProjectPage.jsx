@@ -8,14 +8,15 @@ import ProjectLayout from "../layouts/ProjectLayout.jsx";
 export default function ProjectPage() {
   const { slug } = useParams();
   const project = getProjectBySlug(slug);
-  const index = projects.findIndex((item) => item.slug === slug);
-  const nextProject = projects[(index + 1) % projects.length];
 
   useProjectTheme(project);
 
   if (!project) {
     return <Navigate to="/projects" replace />;
   }
+
+  const index = projects.findIndex((item) => item.slug === slug);
+  const nextProject = projects[(index + 1) % projects.length];
 
   return (
     <motion.div className="page compact-page project-page" {...pageTransition}>

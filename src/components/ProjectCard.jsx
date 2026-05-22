@@ -7,6 +7,7 @@ import TechStack from "./TechStack.jsx";
 
 export default function ProjectCard({ project }) {
   const themeStyle = project.themeStyle ?? {};
+  const techStack = project.techStack ?? [];
   const style = {
     "--project-accent": themeStyle.accent ?? project.accent,
     "--project-gradient": themeStyle.gradient,
@@ -24,7 +25,7 @@ export default function ProjectCard({ project }) {
           <p className="eyebrow">{project.type}</p>
           <h2>{project.title}</h2>
           <p>{project.shortDescription}</p>
-          <TechStack items={project.techStack.slice(0, 4)} small />
+          <TechStack items={techStack.slice(0, 4)} small />
           <span className="card-link">
           Open project
           <ArrowUpRight size={18} />
