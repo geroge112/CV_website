@@ -1291,8 +1291,8 @@ h3 {
   transition: opacity 360ms ease;
 }
 
-.journey-sticky:not(.is-running) .journey-axis {
-  opacity: 0;
+.journey-sticky:not(.is-intro-hidden) .journey-axis {
+  opacity: 0.24;
 }
 
 .journey-axis-line,
@@ -1331,7 +1331,7 @@ h3 {
   opacity: 0.9;
   transform: scaleY(var(--journey-progress));
   transform-origin: top;
-  transition: transform 240ms ease-out;
+  transition: transform 120ms linear;
 }
 
 .journey-points {
@@ -1340,9 +1340,9 @@ h3 {
   left: 50%;
   width: 1px;
   height: 1px;
-  transform: translate(-50%, calc(var(--journey-active-index, 0) * var(--journey-step-gap) * -1));
+  transform: translate(-50%, calc(var(--journey-active-progress, 0) * var(--journey-step-gap) * -1));
   transform-style: preserve-3d;
-  transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 120ms linear;
 }
 
 .journey-point {
@@ -1390,12 +1390,12 @@ h3 {
   z-index: 7;
   width: var(--workflow-card-gap);
   height: 22px;
-  opacity: 0;
+  opacity: calc(var(--connector-presence) * 0.92);
   transform: translate(-100%, -50%);
   transform-origin: right center;
   transition:
-    opacity 260ms ease,
-    transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 120ms linear,
+    transform 120ms linear;
   pointer-events: none;
 }
 
@@ -1416,14 +1416,14 @@ h3 {
     0 0 18px color-mix(in srgb, var(--project-accent) 38%, transparent),
     0 0 42px color-mix(in srgb, var(--project-accent) 18%, transparent);
   transform: translateY(-50%) scaleX(var(--connector-presence));
-  transform-origin: right center;
-  transition: transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: left center;
+  transition: transform 120ms linear;
 }
 
 .journey-connector-node {
   position: absolute;
   top: 50%;
-  right: -5px;
+  left: -5px;
   width: 12px;
   height: 12px;
   border: 1px solid rgba(255, 255, 255, 0.68);
@@ -1434,11 +1434,7 @@ h3 {
     0 0 28px color-mix(in srgb, var(--project-accent) 48%, transparent);
   opacity: var(--connector-presence);
   transform: translateY(-50%);
-  transition: opacity 260ms ease;
-}
-
-.journey-sticky.is-running .journey-connector {
-  opacity: 0.92;
+  transition: opacity 120ms linear;
 }
 
 .journey-stage {

@@ -1,4 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useMotionValueEvent, useScroll } from "framer-motion";
+import { useRef, useState } from "react";
+
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
+}
 
 function getCardState(index, activeIndex) {
   const distance = index - activeIndex;
@@ -56,60 +61,33 @@ function WorkflowCard({ step, state }) {
 
 export default function ProjectWorkflowTree({ workflow }) {
   const sectionRef = useRef(null);
-  const timersRef = useRef([]);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [hasStarted, setHasStarted] = useState(false);
   const steps = workflow?.steps ?? [];
 
-  useEffect(() => {
-    const section = sectionRef.current;
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end end"],
+  });
 
-    if (!section || !steps.length) {
-      return undefined;
-    }
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    const normalized = clamp(latest, 0, 1);
+    const maxIndex = Math.max(steps.length - 1, 0);
+    const stepProgress = normalized * maxIndex;
+    const nextIndex = clamp(Math.round(stepProgress), 0, maxIndex);
+    const distanceFromStep = Math.abs(stepProgress - nextIndex);
+    const connectorPresence = clamp(1 - distanceFromStep * 2, 0, 1);
 
-    const clearTimers = () => {
-      timersRef.current.forEach((timer) => window.clearTimeout(timer));
-      timersRef.current = [];
-    };
-
-    const startSequence = () => {
-      clearTimers();
-      setHasStarted(true);
-      setActiveIndex(0);
-
-      steps.slice(1).forEach((_, index) => {
-        const timer = window.setTimeout(() => {
-          setActiveIndex(index + 1);
-        }, 1450 + index * 1750);
-
-        timersRef.current.push(timer);
-      });
-    };
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          startSequence();
-        }
-      },
-      { threshold: 0.08 }
-    );
-
-    observer.observe(section);
-
-    return () => {
-      observer.disconnect();
-      clearTimers();
-    };
-  }, [steps.length]);
+    sectionRef.current?.style.setProperty("--journey-progress", normalized.toString());
+    sectionRef.current?.style.setProperty("--journey-active-progress", stepProgress.toString());
+    sectionRef.current?.style.setProperty("--connector-presence", connectorPresence.toFixed(3));
+    setActiveIndex((currentIndex) => {
+      return currentIndex === nextIndex ? currentIndex : nextIndex;
+    });
+  });
 
   if (!steps.length) {
     return null;
   }
-
-  const maxIndex = Math.max(steps.length - 1, 1);
-  const progress = activeIndex / maxIndex;
 
   return (
     <section
@@ -118,11 +96,11 @@ export default function ProjectWorkflowTree({ workflow }) {
       style={{
         "--journey-count": steps.length,
         "--journey-active-index": activeIndex,
-        "--journey-progress": progress,
-        "--connector-presence": hasStarted ? 1 : 0,
+        "--journey-active-progress": activeIndex,
+        "--connector-presence": 1,
       }}
     >
-      <div className={`workflow-sticky journey-sticky ${hasStarted ? "is-running" : ""} ${activeIndex > 0 ? "is-intro-hidden" : ""}`}>
+      <div className={`workflow-sticky journey-sticky ${activeIndex > 0 ? "is-intro-hidden" : ""}`}>
         <div className="journey-bg" aria-hidden="true" />
 
         <div className="journey-copy">
