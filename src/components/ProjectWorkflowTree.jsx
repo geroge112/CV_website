@@ -74,12 +74,9 @@ export default function ProjectWorkflowTree({ workflow }) {
     const maxIndex = Math.max(steps.length - 1, 0);
     const stepProgress = normalized * maxIndex;
     const nextIndex = clamp(Math.round(stepProgress), 0, maxIndex);
-    const distanceFromStep = Math.abs(stepProgress - nextIndex);
-    const connectorPresence = clamp(1 - distanceFromStep * 2, 0, 1);
 
     sectionRef.current?.style.setProperty("--journey-progress", normalized.toString());
     sectionRef.current?.style.setProperty("--journey-active-progress", stepProgress.toString());
-    sectionRef.current?.style.setProperty("--connector-presence", connectorPresence.toFixed(3));
     setActiveIndex((currentIndex) => {
       return currentIndex === nextIndex ? currentIndex : nextIndex;
     });
@@ -97,7 +94,6 @@ export default function ProjectWorkflowTree({ workflow }) {
         "--journey-count": steps.length,
         "--journey-active-index": activeIndex,
         "--journey-active-progress": activeIndex,
-        "--connector-presence": 1,
       }}
     >
       <div className={`workflow-sticky journey-sticky ${activeIndex > 0 ? "is-intro-hidden" : ""}`}>
@@ -123,11 +119,6 @@ export default function ProjectWorkflowTree({ workflow }) {
             ))}
           </div>
         </div>
-
-        <span className="journey-connector" aria-hidden="true">
-          <span className="journey-connector-segment from-card" />
-          <span className="journey-connector-node" />
-        </span>
 
         <div className="journey-stage" aria-live="polite">
           {steps.map((step, index) => (
