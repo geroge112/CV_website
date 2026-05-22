@@ -1200,7 +1200,6 @@ h3 {
 
 .workflow-scroll {
   --journey-progress: 0;
-  --connector-presence: 0;
   position: relative;
   width: 100vw;
   height: calc(var(--journey-count) * 100vh);
@@ -1217,7 +1216,7 @@ h3 {
   --workflow-card-width: min(700px, 47vw);
   --workflow-card-height: min(430px, 48vh);
   --workflow-card-half: min(215px, 24vh);
-  --workflow-connector-y: 52%;
+  --workflow-active-y: 52%;
   --journey-step-gap: clamp(54px, 9vh, 92px);
   position: sticky;
   top: 0;
@@ -1336,7 +1335,7 @@ h3 {
 
 .journey-points {
   position: absolute;
-  top: var(--workflow-connector-y);
+  top: var(--workflow-active-y);
   left: 50%;
   width: 1px;
   height: 1px;
@@ -1383,63 +1382,9 @@ h3 {
     0 0 34px color-mix(in srgb, var(--project-accent) 52%, transparent);
 }
 
-.journey-connector {
-  position: absolute;
-  top: var(--workflow-connector-y);
-  left: calc(var(--workflow-axis-x) + var(--workflow-card-gap));
-  z-index: 7;
-  width: var(--workflow-card-gap);
-  height: 22px;
-  opacity: calc(var(--connector-presence) * 0.92);
-  transform: translate(-100%, -50%);
-  transform-origin: right center;
-  transition:
-    opacity 120ms linear,
-    transform 120ms linear;
-  pointer-events: none;
-}
-
-.journey-connector-segment {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  width: 100%;
-  height: 2px;
-  border-radius: 999px;
-  background:
-    linear-gradient(
-      90deg,
-      color-mix(in srgb, var(--project-accent) 34%, rgba(255, 255, 255, 0.04)),
-      color-mix(in srgb, var(--project-accent) 82%, #fff)
-    );
-  box-shadow:
-    0 0 18px color-mix(in srgb, var(--project-accent) 38%, transparent),
-    0 0 42px color-mix(in srgb, var(--project-accent) 18%, transparent);
-  transform: translateY(-50%) scaleX(var(--connector-presence));
-  transform-origin: left center;
-  transition: transform 120ms linear;
-}
-
-.journey-connector-node {
-  position: absolute;
-  top: 50%;
-  left: -5px;
-  width: 12px;
-  height: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.68);
-  border-radius: 999px;
-  background: var(--project-accent);
-  box-shadow:
-    0 0 0 8px color-mix(in srgb, var(--project-accent) 12%, transparent),
-    0 0 28px color-mix(in srgb, var(--project-accent) 48%, transparent);
-  opacity: var(--connector-presence);
-  transform: translateY(-50%);
-  transition: opacity 120ms linear;
-}
-
 .journey-stage {
   position: absolute;
-  top: calc(var(--workflow-connector-y) - var(--workflow-card-half));
+  top: calc(var(--workflow-active-y) - var(--workflow-card-half));
   left: calc(var(--workflow-axis-x) + var(--workflow-card-gap));
   z-index: 3;
   width: var(--workflow-card-width);
@@ -2125,10 +2070,6 @@ h3 {
     width: 26px;
   }
 
-  .journey-connector {
-    display: none;
-  }
-
   .journey-stage {
     --workflow-card-height: min(430px, 54vh);
     --workflow-card-half: min(215px, 27vh);
@@ -2392,8 +2333,7 @@ h3 {
   }
 
   .journey-axis,
-  .journey-progress,
-  .journey-connector {
+  .journey-progress {
     display: none !important;
   }
 }
