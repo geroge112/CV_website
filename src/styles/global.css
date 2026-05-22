@@ -1200,7 +1200,7 @@ h3 {
 
 .workflow-scroll {
   --journey-progress: 0;
-  --connector-presence: 1;
+  --connector-presence: 0;
   position: relative;
   width: 100vw;
   height: calc(var(--journey-count) * 100vh);
@@ -1291,7 +1291,7 @@ h3 {
   transition: opacity 360ms ease;
 }
 
-.journey-sticky:not(.is-intro-hidden) .journey-axis {
+.journey-sticky:not(.is-running) .journey-axis {
   opacity: 0;
 }
 
@@ -1386,57 +1386,59 @@ h3 {
 .journey-connector {
   position: absolute;
   top: var(--workflow-connector-y);
-  left: var(--workflow-axis-x);
-  z-index: 5;
+  left: calc(var(--workflow-axis-x) + var(--workflow-card-gap));
+  z-index: 7;
   width: var(--workflow-card-gap);
-  height: 16px;
+  height: 22px;
   opacity: 0;
-  transform: translateY(-50%);
+  transform: translate(-100%, -50%);
+  transform-origin: right center;
   transition:
-    opacity 220ms ease;
+    opacity 260ms ease,
+    transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
   pointer-events: none;
 }
 
 .journey-connector-segment {
   position: absolute;
   top: 50%;
-  width: 50%;
-  height: 1px;
+  right: 0;
+  width: 100%;
+  height: 2px;
   border-radius: 999px;
   background:
     linear-gradient(
       90deg,
-      color-mix(in srgb, var(--project-accent) 78%, #fff),
-      color-mix(in srgb, var(--project-accent) 34%, rgba(255, 255, 255, 0.06))
+      color-mix(in srgb, var(--project-accent) 34%, rgba(255, 255, 255, 0.04)),
+      color-mix(in srgb, var(--project-accent) 82%, #fff)
     );
-  box-shadow: 0 0 16px color-mix(in srgb, var(--project-accent) 32%, transparent);
-  transform: translateY(-50%);
-  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.journey-connector-segment.from-axis {
-  left: 0;
-  transform: translateY(-50%) scaleX(var(--connector-presence));
-  transform-origin: left center;
-}
-
-.journey-connector-segment.from-card {
-  right: 0;
+  box-shadow:
+    0 0 18px color-mix(in srgb, var(--project-accent) 38%, transparent),
+    0 0 42px color-mix(in srgb, var(--project-accent) 18%, transparent);
   transform: translateY(-50%) scaleX(var(--connector-presence));
   transform-origin: right center;
+  transition: transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.journey-connector-segment.from-card {
-  background:
-    linear-gradient(
-      90deg,
-      color-mix(in srgb, var(--project-accent) 34%, rgba(255, 255, 255, 0.06)),
-      color-mix(in srgb, var(--project-accent) 72%, #fff)
-    );
+.journey-connector-node {
+  position: absolute;
+  top: 50%;
+  right: -5px;
+  width: 12px;
+  height: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.68);
+  border-radius: 999px;
+  background: var(--project-accent);
+  box-shadow:
+    0 0 0 8px color-mix(in srgb, var(--project-accent) 12%, transparent),
+    0 0 28px color-mix(in srgb, var(--project-accent) 48%, transparent);
+  opacity: var(--connector-presence);
+  transform: translateY(-50%);
+  transition: opacity 260ms ease;
 }
 
-.journey-sticky.is-intro-hidden .journey-connector {
-  opacity: 0.86;
+.journey-sticky.is-running .journey-connector {
+  opacity: 0.92;
 }
 
 .journey-stage {

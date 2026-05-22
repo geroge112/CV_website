@@ -29,10 +29,10 @@ export default function HeroSection() {
             <FileText size={18} />
             Read CV
           </Link>
-          <a className="button-secondary" href={`mailto:${resume.email}`}>
+          <Link className="button-secondary" to="/contact">
             <Mail size={18} />
             Contact
-          </a>
+          </Link>
         </div>
       </div>
       <div className="hero-panel">
