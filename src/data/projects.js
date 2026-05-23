@@ -203,6 +203,7 @@ export const projects = [
       "Java 17 client/server book sharing app with a Spring Boot REST API, MySQL persistence, DTOs and a CLI client.",
     description:
       "BookSharing App is a university portfolio project that demonstrates a Java CLI client communicating with a Spring Boot backend through REST endpoints. The server uses controller, service and repository layers, Spring Data JPA entities, DTO request/response models and a MySQL database connection.",
+    repoUrl: "https://github.com/geroge112/booksharing",
     localPath: "C:\\Users\\Гера\\OneDrive\\Документы\\GitHub\\booksharing",
     techStack: ["Java 17", "Spring Boot", "Spring Web", "Spring Data JPA", "MySQL", "Gradle", "REST API", "DTO", "CLI"],
     metrics: ["Client/server modules", "REST API endpoints", "Repository/service layer", "MySQL config template"],
