@@ -967,7 +967,7 @@ h3 {
 }
 
 .diagram-preview {
-  grid-template-columns: repeat(7, auto);
+  grid-template-columns: var(--diagram-columns, repeat(7, auto));
   align-items: center;
   justify-content: center;
   gap: 10px;

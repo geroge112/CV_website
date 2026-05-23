@@ -192,6 +192,60 @@ export const projects = [
     ],
   },
   {
+    slug: "booksharing",
+    title: "BookSharing App",
+    eyebrow: "Java client/server university project",
+    type: "University Client/Server Project",
+    layout: "default",
+    theme: "ai",
+    year: "University",
+    shortDescription:
+      "Java 17 client/server book sharing app with a Spring Boot REST API, MySQL persistence, DTOs and a CLI client.",
+    description:
+      "BookSharing App is a university portfolio project that demonstrates a Java CLI client communicating with a Spring Boot backend through REST endpoints. The server uses controller, service and repository layers, Spring Data JPA entities, DTO request/response models and a MySQL database connection.",
+    localPath: "C:\\Users\\Гера\\OneDrive\\Документы\\GitHub\\booksharing",
+    techStack: ["Java 17", "Spring Boot", "Spring Web", "Spring Data JPA", "MySQL", "Gradle", "REST API", "DTO", "CLI"],
+    metrics: ["Client/server modules", "REST API endpoints", "Repository/service layer", "MySQL config template"],
+    accent: "#4f8cff",
+    themeStyle: {
+      accent: "#4f8cff",
+      gradient: "linear-gradient(135deg, #07111f 0%, #12335f 44%, #101827 100%)",
+      cardStyle: "terminal",
+    },
+    preview: {
+      kind: "diagram",
+      label: "Client -> REST API -> Spring Boot -> MySQL",
+      nodes: ["Client", "REST API", "Spring Boot", "MySQL"],
+    },
+    blocks: [
+      {
+        title: "Project goal",
+        text:
+          "Build a simple client/server book sharing system where users can register, log in and manage book records through a backend API.",
+      },
+      {
+        title: "Architecture",
+        text:
+          "The application follows a simple flow: Client / CLI -> REST API -> Spring Boot services -> repository layer -> MySQL database.",
+      },
+      {
+        title: "Backend structure",
+        text:
+          "The server is built with Spring Boot, Spring Web and Spring Data JPA. It separates controller, service, repository, model and DTO layers.",
+      },
+      {
+        title: "Client communication",
+        text:
+          "The CLI client sends HTTP requests to the backend, serializes request bodies and reads API responses for user and book flows.",
+      },
+      {
+        title: "Portfolio note",
+        text:
+          "This is a university/portfolio project, useful for showing backend fundamentals, REST API thinking and Java module structure.",
+      },
+    ],
+  },
+  {
     slug: "audio-lab",
     title: "Audio Lab",
     eyebrow: "Future music project",

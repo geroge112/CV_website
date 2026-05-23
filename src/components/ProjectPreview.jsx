@@ -27,15 +27,18 @@ export default function ProjectPreview({ project, compact = false }) {
     );
   }
 
+  const nodes = preview.nodes?.length ? preview.nodes : ["Lead", "AI", "CRM", "Sales"];
+  const diagramColumns = `repeat(${nodes.length * 2 - 1}, auto)`;
+
   return (
-    <div className={`project-preview diagram-preview ${compact ? "compact" : ""}`}>
-      <div>Lead</div>
-      <span />
-      <div>AI</div>
-      <span />
-      <div>CRM</div>
-      <span />
-      <div>Sales</div>
+    <div
+      className={`project-preview diagram-preview ${compact ? "compact" : ""}`}
+      style={{ "--diagram-columns": diagramColumns }}
+    >
+      {nodes.map((node, index) => [
+        <div key={`${node}-node`}>{node}</div>,
+        index < nodes.length - 1 ? <span key={`${node}-line`} /> : null,
+      ])}
     </div>
   );
 }
