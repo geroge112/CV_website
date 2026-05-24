@@ -245,6 +245,28 @@ export const projects = [
           "This is a university/portfolio project, useful for showing backend fundamentals, REST API thinking and Java module structure.",
       },
     ],
+    demo: {
+      eyebrow: "Portfolio demo block",
+      title: "Local Docker Compose demo",
+      description:
+        "A visual overview of how the BookSharing backend demo runs locally without connecting this portfolio page to a live backend.",
+      architecture: ["CLI Client", "REST API", "Spring Boot Services", "Repository Layer", "MySQL"],
+      techStack: ["Java 17", "Spring Boot", "Spring Data JPA", "MySQL", "Docker Compose", "Gradle"],
+      endpoints: [
+        { method: "POST", path: "/users", description: "Register a user with a role." },
+        { method: "GET", path: "/users", description: "Read users from the backend API." },
+        { method: "POST", path: "/users/credentials", description: "Check login credentials." },
+        { method: "POST", path: "/books", description: "Create a book connected to a user." },
+        { method: "DELETE", path: "/books/{id}", description: "Delete a book by id." },
+      ],
+      mockScreens: [
+        { title: "Add book", items: ["Title", "Author", "Year", "Genre", "Owner user id"] },
+        { title: "List books", items: ["Book id", "Title", "Author", "User id"] },
+        { title: "User login", items: ["Username", "Password", "Role response"] },
+      ],
+      note: "Real local demo runs through Docker Compose: MySQL container plus Spring Boot server. This portfolio block is a visual mock only.",
+      githubUrl: "https://github.com/geroge112/booksharing",
+    },
   },
   {
     slug: "audio-lab",

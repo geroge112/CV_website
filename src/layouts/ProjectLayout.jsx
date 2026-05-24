@@ -1,5 +1,6 @@
 import { ExternalLink, FolderGit2, MapPinned } from "lucide-react";
 import { Link } from "react-router-dom";
+import ProjectDemoBlock from "../components/ProjectDemoBlock.jsx";
 import ProjectPreview from "../components/ProjectPreview.jsx";
 import ProjectWorkflowTree from "../components/ProjectWorkflowTree.jsx";
 import TechStack from "../components/TechStack.jsx";
@@ -64,6 +65,8 @@ export default function ProjectLayout({ project, nextProject }) {
           </article>
         ))}
       </section>
+
+      <ProjectDemoBlock demo={project.demo} />
 
       <ProjectWorkflowTree workflow={project.workflow} />
 
